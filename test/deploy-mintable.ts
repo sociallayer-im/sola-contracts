@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers, upgrades } from "hardhat";
 
-describe("Lock", function () {
+describe("Mintable", function () {
 
   describe("Deployment", function () {
     it("Should set the right unlockTime", async function () {
