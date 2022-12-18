@@ -5,8 +5,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "./onft/ONFT721.sol";
 
-contract Badge is ERC721, Ownable {
+contract Badge is Ownable, ONFT721 {
     uint256 _counter; // default: 0
 
     using Strings for uint256;
@@ -22,7 +23,12 @@ contract Badge is ERC721, Ownable {
 
     mapping(uint256 => Record) internal records;
 
-    constructor() ERC721("Badge", "Badge") {
+
+//    |
+// 12 |     constructor(string memory _name, string memory _symbol, address _lzEndpoint) ERC721(_name, _symbol) ONFT721Core(_lzEndpoint) {}
+//    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    constructor() ONFT721("Badge", "Badge", 0xf69186dfBa60DdB133E91E9A4B5673624293d8F8) {
         baseURI = "http://nft.solas.im/meta/";
     }
 

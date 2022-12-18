@@ -9,6 +9,7 @@ typechain-types
 cache
 artifacts
 
+.DS_Store
 .openzeppelin
 scripts/looper.ts
 scripts/looper.py
