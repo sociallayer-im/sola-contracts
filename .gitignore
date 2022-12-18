@@ -11,3 +11,5 @@ artifacts
 
 .openzeppelin
 scripts/looper.ts
+scripts/looper.py
+scripts/serve.rb

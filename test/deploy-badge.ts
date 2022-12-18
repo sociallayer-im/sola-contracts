@@ -8,7 +8,7 @@ describe("Badge", function () {
       const [owner, otherAccount] = await ethers.getSigners();
 
       const Badge = await ethers.getContractFactory("Badge");
-      let badge = await upgrades.deployProxy(Badge, ["http://nft.solas.im/meta/"]);
+      let badge = await Badge.deploy();
       await badge.deployed();
       console.log("badge deployed to:", badge.address);
 

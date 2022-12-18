@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: MIT License
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
 
-contract Badge is ERC721, Ownable {
+contract BadgeUpgradeable is ERC721Upgradeable, OwnableUpgradeable {
     uint256 _counter; // default: 0
 
-    using Strings for uint256;
+    using StringsUpgradeable for uint256;
 
     error URIQueryForNonexistentToken();
 
@@ -22,8 +23,10 @@ contract Badge is ERC721, Ownable {
 
     mapping(uint256 => Record) internal records;
 
-    constructor() ERC721("Badge", "Badge") {
-        baseURI = "http://nft.solas.im/meta/";
+    function initialize(string memory _baseURI) public initializer {
+        ERC721Upgradeable.__ERC721_init("Badge", "Badge");
+        OwnableUpgradeable.__Ownable_init();
+        baseURI = _baseURI;
     }
 
     function setCounter(uint256 value) public onlyOwner returns (uint256) {
@@ -99,8 +102,7 @@ contract Badge is ERC721, Ownable {
     function _beforeTokenTransfer(
         address from,
         address to,
-        uint256 tokenId, /* firstTokenId */
-        uint256 batchSize
+        uint256 tokenId
     ) internal virtual override {
         require(from == address(0) || to == address(0) || _msgSender() == owner(), "not transferrable");
     }
